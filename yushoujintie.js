@@ -41,7 +41,9 @@ async function getActiveInfo() {
         }
       }
       resolve();
+      console.log('getActiveInfo','success')
     } catch (error) {
+      console.log('getActiveInfo',error)
       reject({ result: false, error: error });
     }
   });
@@ -49,13 +51,14 @@ async function getActiveInfo() {
 async function getToken(ck) {
   const post = bent("POST", "string",200, {
     Host: "jdjoy.jd.com",
-    Accept: "application/json, text/plain, */*",
-    Origin: "https://prodev.m.jd.com",
-    Referer: "https://prodev.m.jd.com/",
+    Accept: "application/json, text/javascript, */*; q=0.01",
+    Origin: "https://jdjoy.jd.com",
+    Referer: "https://jdjoy.jd.com/",
     "Accept-Encoding": "gzip, deflate, br",
+    "Content-type":"application/json; charset=utf-8",
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
-    "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+    "Accept-Language": "zh-CN,zh-Hans;q=0.8",
     Cookie:ck,
   });
 
@@ -64,7 +67,6 @@ async function getToken(ck) {
       const res = await post(
         `https://jdjoy.jd.com/saas/framework/encrypt/pin?appId=${appId}`
       );
-
       let data = JSON.parse(res);
       if (data.success) {
         lkToken = data.data.lkToken;
@@ -73,8 +75,10 @@ async function getToken(ck) {
       }else{
         reject({ result: false, error: data });
       }
+      console.log('getToken','success')
     } catch (error) {
-      reject({ result: false, error: error });
+      console.log('getToken','error')
+      reject({ result: false,errorMsg: '获取token失败，请稍等会再试~' });
     }
   });
 }
@@ -103,7 +107,7 @@ function verify(lkToken,ck) {
   },null,ck);
   const post = bent("POST", "string",200, bentUrl.headers);
 
-  return new Promise(async (resolve) => {
+  return new Promise(async function (resolve,reject) {
     try {
       const res = await post(bentUrl.url, bentUrl.body);
       let data = JSON.parse(res);
@@ -112,7 +116,7 @@ function verify(lkToken,ck) {
         resolve()
       } else{
         reject({ result: false, error: data });
-        //console.log(`活动太火爆了，还是去买买买吧！！！`);
+        console.log(`活动太火爆了，还是去买买买吧！！！`);
       }
     } catch (error) {
       reject({ result: false, error: error });
@@ -133,7 +137,7 @@ function getJdCoupon(authorization,url) {
     null
   );
   const post = bent("POST", "string", 200,bentUrl.headers);
-  return new Promise(async (resolve) => {
+  return new Promise(async function (resolve,reject) {
     try {
       const res = await post(bentUrl.url, bentUrl.body);
       let data = JSON.parse(res);
