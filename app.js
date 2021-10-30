@@ -34,6 +34,9 @@ router.get(`/jd`, async (ctx, next) => {
 router.post(`/newjd`, async (ctx, next) => {
   await api.getNewJdCoupon(ctx, next);
 });
+router.post(`/newjd2`, async (ctx, next) => {
+  await api.getNewJdCoupon2(ctx, next);
+});
 router.get(`/jdtime`, async (ctx, next) => {
   await api.getJdTime(ctx, next);
 });

@@ -271,7 +271,34 @@ let getNewJdCoupon = async (ctx, next) => {
   ctx.body = res;
   console.log(res);
 };
+/**领取jd */
+let getNewJdCoupon2 = async (ctx, next) => {
+  let request = ctx.request;
+  let req_body = request.body; //从请求body中获取参数
+  if (!req_body.url) {
+    ctx.body = { result: false, data: "请传入网址" };
+    return;
+  }
+  if (!req_body.ck) {
+    ctx.body = { result: false, data: "请传入ck" };
+    return;
+  }
+  const post = bent("POST", "json", 200, {
+    //"Accept": "application/json",
+    "Referer": "https://carnivalcity.m.jd.com/",
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Origin": "https://carnivalcity.m.jd.com",
+    cookie: req_body.ck,
+    "user-agent":
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
+    //'Content-Length': Buffer.byteLength(postdata)//填写数据长度
+  });
+  const res = await post(req_body.url);
 
+  /*****把接口返回的数据发送给前端*****/
+  ctx.body = res;
+  console.log(res);
+};
 /**领取jd */
 let yushouToken = async (ctx, next) => {
   let request = ctx.request;
@@ -313,6 +340,7 @@ module.exports = {
   pullBark,
   getJdCoupon,
   getNewJdCoupon,
+  getNewJdCoupon2,
   getJdTime,
   yushouToken,
   yushou,
