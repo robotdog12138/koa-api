@@ -7,6 +7,8 @@ const path = require("path");
 const api = require("./service");
 const app = new Koa();
 const router = new KoaRouter();
+//const userController = require("./controller/user");
+const couponController = require("./controller/coupon");
 
 // Routes
 router.get(`/`, async (ctx) => {
@@ -41,6 +43,12 @@ router.post(`/yushouToken`, async (ctx, next) => {
 router.post(`/yushou`, async (ctx, next) => {
   await api.yushou(ctx, next);
 });
+//用户注册
+//router.post(`/regist`, userController.create);
+//用户注册
+router.post(`/addCoupon`, couponController.create);
+router.post(`/getCoupon`, couponController.getCouponList);
+router.post(`/removeCoupon`, couponController.remove);
 app.use(cors());
 app.use(bodyParser());
 app.use(router.allowedMethods()).use(router.routes());
