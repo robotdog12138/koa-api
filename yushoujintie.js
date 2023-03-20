@@ -32,7 +32,7 @@ async function getActiveInfo() {
       /*****把接口返回的数据发送给前端*****/
       const data = JSON.parse(
         res &&
-          res.match(/window\.performance.mark\(e\)}}\((.*)\);<\/script>/)[1]
+          res.match(/window\.performance.mark\(e\)}}\((.*)\)<\/script>/)[1]
       );
       for (let key of Object.keys(data.codeFloors)) {
         let vo = data.codeFloors[key];
