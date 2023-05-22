@@ -234,7 +234,7 @@ let getJdTime = async (ctx, next) => {
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
   });
   const res = await get(
-    "https://api.m.jd.com/client.action?functionId=queryMaterialAdverts&client=wh5"
+    "https://api.m.jd.com/api?appid=paimai&functionId=getPaimaiRealTimeData&body={%22paimaiId%22:0}"
   );
   /*****把接口返回的数据发送给前端*****/
   ctx.body = res;
