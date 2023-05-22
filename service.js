@@ -231,7 +231,7 @@ let getJdTime = async (ctx, next) => {
   const get = bent("GET", "json", 200, {
     "Content-Type": "text/html;charset=UTF-8",
     "user-agent":
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36",
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.39",
   });
   const res = await get(
     "https://api.m.jd.com/api?appid=paimai&functionId=getPaimaiRealTimeData&body={%22paimaiId%22:0}"
